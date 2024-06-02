@@ -1,0 +1,14 @@
+{% extends 'mailing/base.html' %}
+{% block content %}
+<div class="col-3">
+    <div class="card mb-4 box-shadow">
+        <div class="card-header">
+            <h4 class="my-0 font-weight-normal">{{ object.attempt_status }}</h4>
+        </div>
+        <div class="card-body">
+            <h1 class="card-title pricing-card-title">{{ object.time_attempt }}</h1>
+            <h1 class="card-title pricing-card-title">{{ object.mailing }}</h1>
+        </div>
+    </div>
+</div>
+{% endblock %}
