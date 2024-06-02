@@ -21,7 +21,7 @@ MAILING_STATUS = (
 )
 
 ATTEMPT_STATUS = (
-    ('successfull', 'attempt_successful'),
+    ('successful', 'attempt_successful'),
     ('failed', 'attempt_failed'),
 )
 
@@ -30,7 +30,7 @@ class Client(models.Model):
     first_name = models.CharField(max_length=100, **NULLABLE, verbose_name='client_name')
     last_name = models.CharField(max_length=100, **NULLABLE,  verbose_name='client_surname')
     comment = models.TextField(**NULLABLE, verbose_name='comment')
-    owner = models.ForeignKey(User, default=False, on_delete=models.CASCADE, verbose_name='пользователь')
+    owner = models.ForeignKey(User, default=False, on_delete=models.CASCADE, verbose_name='owner')
 
 
     def __str__(self):

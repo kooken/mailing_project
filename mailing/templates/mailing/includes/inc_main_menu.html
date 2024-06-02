@@ -1,0 +1,19 @@
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <h5 class="my-0 mr-md-auto font-weight-normal">Mailing platform</h5>
+    <nav class="ms-5">
+        <a class="p-2 btn btn-outline-primary" href="{% url 'mailing:index' %}">Clients</a>
+        <a class="p-2 btn btn-outline-primary" href="{% url 'mailing:message_list' %}">Messages</a>
+        <a class="p-2 btn btn-outline-primary" href="{% url 'mailing:mailing_list' %}">Mailings</a>
+        <a class="p-2 btn btn-outline-primary" href="{% url 'mailing:attempt_list' %}">Attempts</a>
+<!--        {% if user.is_authenticated %}-->
+<!--        <form method="post" action="{% url 'users:logout' %}">-->
+<!--            {% csrf_token %}-->
+<!--            <button class="btn btn-outline-primary" type="submit">Log Out</button>-->
+<!--        </form>-->
+<!--        <a class="p-2 btn btn-outline-primary" href="{% url 'users:profile' %}">Profile</a>-->
+<!--        {% else %}-->
+<!--        <a class="p-2 btn btn-outline-primary" href="{% url 'users:login' %}">Log In</a>-->
+<!--        <a class="p-2 btn btn-outline-primary" href="{% url 'users:register' %}">Registration</a>-->
+<!--        {% endif %}-->
+    </nav>
+</div>

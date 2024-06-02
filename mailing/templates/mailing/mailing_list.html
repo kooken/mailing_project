@@ -1,0 +1,27 @@
+{% extends 'mailing/base.html' %}
+{% block content %}
+<div class="col-12 mb-5">
+    <a class="btn btn-outline-primary" href="{% url 'mailing:create_mailing' %}">Add mailing</a>
+</div>
+<div class="row">
+    {% for object in object_list %}
+    <div class="col-3">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">Mailing message: {{ object.mailing_message }} </h4>
+            </div>
+            <div class="card-body">
+                <a href="{% url 'mailing:mailing_detail' object.pk %}"
+                   class="btn btn-sm btn-outline-secondary">View mailing details</a>
+<!--                {% if perms.main.can_edit_product_description and perms.main.can_edit_is_published or user == main.owner %}-->
+                <a href="{% url 'mailing:edit_mailing' object.pk %}" type="button"
+                   class="btn btn-sm btn-outline-secondary">Edit mailing</a>
+<!--                {% endif %}-->
+                <a href="{% url 'mailing:delete_mailing' object.pk %}"
+                   class="btn btn-sm btn-outline-danger">Delete mailing</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
