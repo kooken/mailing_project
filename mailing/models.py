@@ -40,6 +40,10 @@ class Client(models.Model):
         verbose_name = 'client'
         verbose_name_plural = 'clients'
 
+        permissions = [
+            ('can_view_email', 'Can view email'),
+        ]
+
 
 class Message(models.Model):
     subject = models.CharField(max_length=150, verbose_name='message_subject')
@@ -68,6 +72,9 @@ class Mailing (models.Model):
     class Meta:
         verbose_name = 'mailing'
         verbose_name_plural = 'mailings'
+        permissions = [
+            ('can_edit_mailing_status', 'Can edit mailing status'),
+        ]
 
 class Attempt (models.Model):
     time_attempt = models.DateTimeField(auto_now_add=True, verbose_name='attempt_time')

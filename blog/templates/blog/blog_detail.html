@@ -1,0 +1,16 @@
+{% extends 'mailing/base.html' %}
+{% load blog_media_tag %}
+{% block content %}
+<div class="col-3">
+    <div class="card mb-4 box-shadow">
+        <div class="card-header">
+            <h4 class="my-0 font-weight-normal">{{ object.title }}</h4>
+        </div>
+        <div class="card-body">
+            <h1 class="card-title pricing-card-title">{{ object.content }}</h1>
+            <img class="card-img-top" src="{{ object.preview|blog_media_tag}}">
+            <p> Просмотры: {{ object.views_count }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
