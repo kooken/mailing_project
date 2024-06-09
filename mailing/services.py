@@ -9,7 +9,7 @@ from mailing.models import Mailing
 
 def send_mailing():
     now = datetime.now()
-    mailings = Mailing.objects.filter(next_send_time__lte=now)
+    mailings = Mailing.objects.filter(mailing_sent_lte=now)
 
     for mailing in mailings:
         clients = mailing.client.all()
@@ -21,21 +21,21 @@ def send_mailing():
                 recipient_list=[client.email],
             )
 
-        if mailing.regularity == 'daily':
-            mailing.next_send_time += timedelta(days=1)
-        elif mailing.regularity == 'weekly':
-            mailing.next_send_time += timedelta(weeks=1)
-        elif mailing.regularity == 'monthly':
-            mailing.next_send_time += timedelta(days=30)
+        if mailing.mailing_periodicity == 'daily':
+            mailing.mailing_sent += timedelta(days=1)
+        elif mailing.mailing_periodicity == 'weekly':
+            mailing.mailing_sent += timedelta(weeks=1)
+        elif mailing.mailing_periodicity == 'monthly':
+            mailing.mailing_sent += timedelta(days=30)
         mailing.save()
 
 
 def start_scheduler():
-    print('Starting scheduler...')
+    # print('Starting scheduler...')
     scheduler = BackgroundScheduler()
     scheduler.add_job(send_mailing, 'interval', seconds=60)
 
     if not scheduler.running:
         scheduler.start()
 
-    print('Scheduler started')
+    # print('Scheduler started')
