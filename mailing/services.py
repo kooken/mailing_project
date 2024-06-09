@@ -8,8 +8,6 @@ from django.core.mail import send_mail
 from mailing.models import Mailing
 
 
-@login_required
-@permission_required('mailing.edit_mailing_status')
 def send_mailing():
     now = datetime.now()
     mailings = Mailing.objects.filter(mailing_sent_lte=now)

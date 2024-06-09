@@ -1,7 +1,11 @@
+from datetime import timedelta
+
 from django.db import models
 
 # Create your models here.
 from django.db import models
+from django.utils import timezone
+from django.utils.timezone import now
 
 from users.models import User
 
@@ -24,6 +28,9 @@ ATTEMPT_STATUS = (
     ('successful', 'attempt_successful'),
     ('failed', 'attempt_failed'),
 )
+
+def one_week_from_now():
+    return timezone.now() + timedelta(weeks=1)
 
 class Client(models.Model):
     email = models.EmailField(max_length=100, verbose_name='email')
@@ -58,8 +65,8 @@ class Message(models.Model):
         verbose_name_plural = 'messages'
 
 class Mailing (models.Model):
-    mailing_sent = models.DateTimeField(verbose_name='send_timestamp')
-    mailing_end = models.DateTimeField(verbose_name='end_timestamp')
+    mailing_sent = models.DateTimeField(default=timezone.now, verbose_name='send_timestamp')
+    mailing_end = models.DateTimeField(default=one_week_from_now, verbose_name='end_timestamp')
     mailing_periodicity = models.CharField(max_length=100, choices=MAILING_PERIODICITY, verbose_name='periodicity')
     mailing_status = models.CharField(max_length=100, choices=MAILING_STATUS, verbose_name='status')
     mailing_clients = models.ManyToManyField(Client, verbose_name='clients')
