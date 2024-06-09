@@ -2,11 +2,14 @@ from datetime import datetime, timedelta
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from django.conf import settings
+from django.contrib.auth.decorators import login_required, permission_required
 from django.core.mail import send_mail
 
 from mailing.models import Mailing
 
 
+@login_required
+@permission_required('mailing.edit_mailing_status')
 def send_mailing():
     now = datetime.now()
     mailings = Mailing.objects.filter(mailing_sent_lte=now)
@@ -31,11 +34,8 @@ def send_mailing():
 
 
 def start_scheduler():
-    # print('Starting scheduler...')
     scheduler = BackgroundScheduler()
     scheduler.add_job(send_mailing, 'interval', seconds=60)
 
     if not scheduler.running:
         scheduler.start()
-
-    # print('Scheduler started')
