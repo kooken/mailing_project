@@ -41,24 +41,24 @@ class MessageListView(LoginRequiredMixin, ListView):
 
 class MessageDetailView(LoginRequiredMixin, DetailView):
     model = Message
-    success_url = reverse_lazy('mailing:index')
+    success_url = reverse_lazy('mailing:message_list')
 
 
 class MessageCreateView(LoginRequiredMixin, CreateView):
     model = Message
     form_class = MessageForm
-    success_url = reverse_lazy('mailing:index')
+    success_url = reverse_lazy('mailing:message_list')
 
 
 class MessageUpdateView(LoginRequiredMixin, UpdateView):
     model = Message
     form_class = MessageForm
-    success_url = reverse_lazy('mailing:index')
+    success_url = reverse_lazy('mailing:message_list')
 
 
 class MessageDeleteView(LoginRequiredMixin, DeleteView):
     model = Message
-    success_url = reverse_lazy('mailing:index')
+    success_url = reverse_lazy('mailing:message_list')
 
 
 class MailingListView(LoginRequiredMixin, ListView):
@@ -68,48 +68,48 @@ class MailingListView(LoginRequiredMixin, ListView):
 
 class MailingDetailView(LoginRequiredMixin, DetailView):
     model = Mailing
-    success_url = reverse_lazy('mailing:index')
+    success_url = reverse_lazy('mailing:mailing_list')
 
 
 class MailingCreateView(LoginRequiredMixin, CreateView):
     model = Mailing
     form_class = MailingForm
-    success_url = reverse_lazy('mailing:index')
+    success_url = reverse_lazy('mailing:mailing_list')
 
 
 class MailingUpdateView(LoginRequiredMixin, UpdateView):
     model = Mailing
     form_class = MailingForm
-    success_url = reverse_lazy('mailing:index')
+    success_url = reverse_lazy('mailing:mailing_list')
 
 
 class MailingDeleteView(LoginRequiredMixin, DeleteView):
     model = Mailing
-    success_url = reverse_lazy('mailing:index')
+    success_url = reverse_lazy('mailing:mailing_list')
 
 
-class AttemptListView(LoginRequiredMixin, ListView):
-    model = Attempt
-    template_name = 'attempt_list.html'
-
-
-class AttemptDetailView(LoginRequiredMixin, DetailView):
-    model = Attempt
-    success_url = reverse_lazy('mailing:index')
+# class AttemptListView(LoginRequiredMixin, ListView):
+#     model = Attempt
+#     template_name = 'attempt_list.html'
+#
+#
+# class AttemptDetailView(LoginRequiredMixin, DetailView):
+#     model = Attempt
+#     success_url = reverse_lazy('mailing:index')
 
 
 class AttemptCreateView(LoginRequiredMixin, CreateView):
     model = Attempt
     form_class = AttemptForm
     success_url = reverse_lazy('mailing:index')
-
-
-class AttemptUpdateView(LoginRequiredMixin, UpdateView):
-    model = Attempt
-    form_class = AttemptForm
-    success_url = reverse_lazy('mailing:index')
-
-
-class AttemptDeleteView(LoginRequiredMixin, DeleteView):
-    model = Attempt
-    success_url = reverse_lazy('mailing:index')
+#
+#
+# class AttemptUpdateView(LoginRequiredMixin, UpdateView):
+#     model = Attempt
+#     form_class = AttemptForm
+#     success_url = reverse_lazy('mailing:index')
+#
+#
+# class AttemptDeleteView(LoginRequiredMixin, DeleteView):
+#     model = Attempt
+#     success_url = reverse_lazy('mailing:index')

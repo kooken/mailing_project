@@ -1,7 +1,11 @@
+from datetime import timedelta
+
 from django.db import models
 
 # Create your models here.
 from django.db import models
+from django.utils import timezone
+from django.utils.timezone import now
 
 from users.models import User
 
@@ -25,6 +29,9 @@ ATTEMPT_STATUS = (
     ('failed', 'attempt_failed'),
 )
 
+def one_week_from_now():
+    return timezone.now() + timedelta(weeks=1)
+
 class Client(models.Model):
     email = models.EmailField(max_length=100, verbose_name='email')
     first_name = models.CharField(max_length=100, **NULLABLE, verbose_name='client_name')
@@ -40,6 +47,10 @@ class Client(models.Model):
         verbose_name = 'client'
         verbose_name_plural = 'clients'
 
+        permissions = [
+            ('can_view_email', 'Can view email'),
+        ]
+
 
 class Message(models.Model):
     subject = models.CharField(max_length=150, verbose_name='message_subject')
@@ -54,8 +65,8 @@ class Message(models.Model):
         verbose_name_plural = 'messages'
 
 class Mailing (models.Model):
-    mailing_sent = models.DateTimeField(verbose_name='send_timestamp')
-    mailing_end = models.DateTimeField(verbose_name='end_timestamp')
+    mailing_sent = models.DateTimeField(default=timezone.now, verbose_name='send_timestamp')
+    mailing_end = models.DateTimeField(default=one_week_from_now, verbose_name='end_timestamp')
     mailing_periodicity = models.CharField(max_length=100, choices=MAILING_PERIODICITY, verbose_name='periodicity')
     mailing_status = models.CharField(max_length=100, choices=MAILING_STATUS, verbose_name='status')
     mailing_clients = models.ManyToManyField(Client, verbose_name='clients')
@@ -68,6 +79,9 @@ class Mailing (models.Model):
     class Meta:
         verbose_name = 'mailing'
         verbose_name_plural = 'mailings'
+        permissions = [
+            ('can_edit_mailing_status', 'Can edit mailing status'),
+        ]
 
 class Attempt (models.Model):
     time_attempt = models.DateTimeField(auto_now_add=True, verbose_name='attempt_time')

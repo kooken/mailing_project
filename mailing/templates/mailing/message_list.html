@@ -14,7 +14,7 @@
                 <a href="{% url 'mailing:message_detail' object.pk %}"
                    class="btn btn-sm btn-outline-secondary">View message details</a>
 <!--                {% if perms.main.can_edit_product_description and perms.main.can_edit_is_published or user == main.owner %}-->
-                <a href="{% url 'mailing:edit_message' object.pk %}" type="button"
+                <a href="{% url 'mailing:update_message' object.pk %}" type="button"
                    class="btn btn-sm btn-outline-secondary">Edit message</a>
 <!--                {% endif %}-->
                 <a href="{% url 'mailing:delete_message' object.pk %}"

@@ -4,7 +4,7 @@ from mailing.apps import MailingConfig
 from mailing.views import (ClientListView, ClientDetailView, ClientDeleteView, ClientCreateView, ClientUpdateView,
                            MessageCreateView, MessageDeleteView, MessageDetailView, MessageUpdateView, MessageListView,
                            MailingListView, MailingCreateView, MailingDeleteView, MailingDetailView, MailingUpdateView,
-                           AttemptListView, AttemptCreateView, AttemptDeleteView, AttemptDetailView, AttemptUpdateView)
+                           AttemptCreateView)
 
 app_name = MailingConfig.name
 
@@ -23,13 +23,13 @@ urlpatterns = [
 
     path('create_mailing/', MailingCreateView.as_view(), name='create_mailing'),
     path('update_mailing/<int:pk>/', MailingUpdateView.as_view(), name='update_mailing'),
-    path('mailing_detail/<int:pk>/', MailingDetailView.as_view(), name='message_mailing'),
+    path('mailing_detail/<int:pk>/', MailingDetailView.as_view(), name='mailing_detail'),
     path('delete_mailing/<int:pk>/', MailingDeleteView.as_view(), name='delete_mailing'),
     path('mailing_list/', MailingListView.as_view(), name='mailing_list'),
 
     path('create_attempt/', AttemptCreateView.as_view(), name='create_attempt'),
-    path('update_attempt/<int:pk>/', AttemptUpdateView.as_view(), name='update_attempt'),
-    path('attempt_detail/<int:pk>/', AttemptDetailView.as_view(), name='message_attempt'),
-    path('delete_attempt/<int:pk>/', AttemptDeleteView.as_view(), name='delete_attempt'),
-    path('attempt_list/', AttemptListView.as_view(), name='attempt_list'),
+    # path('update_attempt/<int:pk>/', AttemptUpdateView.as_view(), name='update_attempt'),
+    # path('attempt_detail/<int:pk>/', AttemptDetailView.as_view(), name='message_attempt'),
+    # path('delete_attempt/<int:pk>/', AttemptDeleteView.as_view(), name='delete_attempt'),
+    # path('attempt_list/', AttemptListView.as_view(), name='attempt_list'),
 ]

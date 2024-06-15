@@ -13,8 +13,8 @@
             <div class="card-body">
                 <a href="{% url 'mailing:mailing_detail' object.pk %}"
                    class="btn btn-sm btn-outline-secondary">View mailing details</a>
-<!--                {% if perms.main.can_edit_product_description and perms.main.can_edit_is_published or user == main.owner %}-->
-                <a href="{% url 'mailing:edit_mailing' object.pk %}" type="button"
+<!--                {% if perms.main.can_edit_mailing_status %}-->
+                <a href="{% url 'mailing:update_mailing' object.pk %}" type="button"
                    class="btn btn-sm btn-outline-secondary">Edit mailing</a>
 <!--                {% endif %}-->
                 <a href="{% url 'mailing:delete_mailing' object.pk %}"
