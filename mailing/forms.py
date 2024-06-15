@@ -14,7 +14,7 @@ class StyleFormMixin:
 class ClientForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Client
-        fields = '__all__'
+        exclude = ('owner',)
 
 class MessageForm(StyleFormMixin, forms.ModelForm):
     class Meta:
@@ -25,6 +25,13 @@ class MailingForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Mailing
         fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request')
+        user = self.request.user
+        super().__init__(*args, **kwargs)
+        self.fields['mailing_clients'].queryset = Client.objects.filter(owner=user)
+        self.fields['mailing_message'].queryset = Message.objects.filter(owner=user)
 
 class AttemptForm(StyleFormMixin, forms.ModelForm):
     class Meta:

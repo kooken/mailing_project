@@ -10,7 +10,7 @@ from mailing.models import Mailing
 
 def send_mailing():
     now = datetime.now()
-    mailings = Mailing.objects.filter(mailing_sent_lte=now)
+    mailings = Mailing.objects.filter(mailing_sent__lte=now)
 
     for mailing in mailings:
         clients = mailing.client.all()

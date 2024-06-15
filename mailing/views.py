@@ -22,6 +22,13 @@ class ClientCreateView(LoginRequiredMixin, CreateView):
     form_class = ClientForm
     success_url = reverse_lazy('mailing:index')
 
+    def form_valid(self, form):
+        client = form.save()
+        user = self.request.user
+        client.owner = user
+        client.save()
+        return super().form_valid(form)
+
 
 class ClientUpdateView(LoginRequiredMixin, UpdateView):
     model = Client
@@ -48,6 +55,12 @@ class MessageCreateView(LoginRequiredMixin, CreateView):
     model = Message
     form_class = MessageForm
     success_url = reverse_lazy('mailing:message_list')
+    def form_valid(self, form):
+        message_owner = form.save()
+        user = self.request.user
+        message_owner.owner = user
+        message_owner.save()
+        return super().form_valid(form)
 
 
 class MessageUpdateView(LoginRequiredMixin, UpdateView):
@@ -76,6 +89,18 @@ class MailingCreateView(LoginRequiredMixin, CreateView):
     form_class = MailingForm
     success_url = reverse_lazy('mailing:mailing_list')
 
+    def form_valid(self, form):
+        mailing_owner = form.save()
+        user = self.request.user
+        mailing_owner.owner = user
+        mailing_owner.save()
+        return super().form_valid(form)
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'request': self.request})
+        return kwargs
+
 
 class MailingUpdateView(LoginRequiredMixin, UpdateView):
     model = Mailing
@@ -102,6 +127,13 @@ class AttemptCreateView(LoginRequiredMixin, CreateView):
     model = Attempt
     form_class = AttemptForm
     success_url = reverse_lazy('mailing:index')
+
+    def form_valid(self, form):
+        attempt_owner = form.save()
+        user = self.request.user
+        attempt_owner.owner = user
+        attempt_owner.save()
+        return super().form_valid(form)
 #
 #
 # class AttemptUpdateView(LoginRequiredMixin, UpdateView):

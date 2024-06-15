@@ -7,7 +7,7 @@ from blog.models import Blog
 
 
 # Create your views here.
-class BlogDetailView(DetailView):
+class BlogDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = Blog
 
     def get_object(self, queryset=None):
@@ -17,7 +17,7 @@ class BlogDetailView(DetailView):
         return self.object
 
 
-class BlogDeleteView(DeleteView):
+class BlogDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Blog
     success_url = reverse_lazy('blog:list')
 
@@ -28,10 +28,17 @@ class BlogUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     fields = ('title', 'content', 'preview',)
 
 
-class BlogCreateView(CreateView):
+class BlogCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Blog
     fields = ('title', 'content', 'preview',)
     success_url = reverse_lazy('blog:list')
 
-class BlogListView(ListView):
+    def form_valid(self, form):
+        blogpost = form.save()
+        user = self.request.user
+        blogpost.owner = user
+        blogpost.save()
+        return super().form_valid(form)
+
+class BlogListView(LoginRequiredMixin, ListView):
     model = Blog

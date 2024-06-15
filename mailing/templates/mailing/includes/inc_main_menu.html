@@ -5,7 +5,7 @@
         <a class="p-2 btn btn-outline-primary" href="{% url 'mailing:index' %}">Clients</a>
         <a class="p-2 btn btn-outline-primary" href="{% url 'mailing:message_list' %}">Messages</a>
         <a class="p-2 btn btn-outline-primary" href="{% url 'mailing:mailing_list' %}">Mailings</a>
-        <a class="p-2 btn btn-outline-primary" href="{% url 'mailing:attempt_list' %}">Attempts</a>
+<!--        <a class="p-2 btn btn-outline-primary" href="{% url 'mailing:attempt_list' %}">Attempts</a>-->
         {% if user.is_authenticated %}
         <form method="post" action="{% url 'users:logout' %}">
             {% csrf_token %}
