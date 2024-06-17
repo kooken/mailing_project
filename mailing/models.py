@@ -37,7 +37,7 @@ class Client(models.Model):
     first_name = models.CharField(max_length=100, **NULLABLE, verbose_name='client_name')
     last_name = models.CharField(max_length=100, **NULLABLE,  verbose_name='client_surname')
     comment = models.TextField(**NULLABLE, verbose_name='comment')
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='owner')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='owner', **NULLABLE)
 
 
     def __str__(self):
@@ -55,7 +55,7 @@ class Client(models.Model):
 class Message(models.Model):
     subject = models.CharField(max_length=150, verbose_name='message_subject')
     text = models.TextField(**NULLABLE, verbose_name='message_text')
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='message_user')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='message_user', **NULLABLE)
 
     def __str__(self):
         return f'{self.subject}'
@@ -71,7 +71,7 @@ class Mailing (models.Model):
     mailing_status = models.CharField(max_length=100, choices=MAILING_STATUS, verbose_name='status')
     mailing_clients = models.ManyToManyField(Client, verbose_name='clients')
     mailing_message = models.ForeignKey(Message, on_delete=models.CASCADE, **NULLABLE, verbose_name='message')
-    mailing_owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='mailing_user')
+    mailing_owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='mailing_user', **NULLABLE)
 
     def __str__(self):
         return f'{self.mailing_sent}'

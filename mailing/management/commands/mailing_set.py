@@ -15,5 +15,5 @@ class Command(BaseCommand):
             subject=Message.subject,
             message=Message.text,
             from_email=settings.EMAIL_HOST_USER,
-            recipient_list=[client.email for client in mailing.client.all()]
+            recipient_list=[client.email for client in mailing.mailing_clients.all()]
         )

@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.mail import send_mail
 
-from mailing.models import Mailing
+from mailing.models import Mailing, Message
 
 
 def send_mailing():
@@ -13,11 +13,11 @@ def send_mailing():
     mailings = Mailing.objects.filter(mailing_sent__lte=now)
 
     for mailing in mailings:
-        clients = mailing.client.all()
+        clients = mailing.mailing_clients.all()
         for client in clients:
             send_mail(
-                subject=mailing.message.subject,
-                message=mailing.message.message,
+                subject=Message.subject,
+                message=Message.text,
                 from_email=settings.EMAIL_HOST_USER,
                 recipient_list=[client.email],
             )

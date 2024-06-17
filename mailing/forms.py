@@ -19,12 +19,12 @@ class ClientForm(StyleFormMixin, forms.ModelForm):
 class MessageForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Message
-        fields = '__all__'
+        exclude = ('owner',)
 
 class MailingForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Mailing
-        fields = '__all__'
+        exclude = ('owner',)
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request')
