@@ -13,10 +13,10 @@
             <div class="card-body">
                 <a href="{% url 'mailing:client_detail' object.pk %}"
                    class="btn btn-sm btn-outline-secondary">View client details</a>
-<!--                {% if perms.main.can_edit_product_description and perms.main.can_edit_is_published or user == main.owner %}-->
+                {% if perms.main.can_edit_product_description and perms.main.can_edit_is_published or user == object.owner %}
                 <a href="{% url 'mailing:edit_client' object.pk %}" type="button"
                    class="btn btn-sm btn-outline-secondary">Edit client</a>
-<!--                {% endif %}-->
+                {% endif %}
                 <a href="{% url 'mailing:delete_client' object.pk %}"
                    class="btn btn-sm btn-outline-danger">Delete client</a>
             </div>
