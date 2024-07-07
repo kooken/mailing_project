@@ -71,7 +71,6 @@ class Mailing (models.Model):
     mailing_status = models.CharField(max_length=100, choices=MAILING_STATUS, verbose_name='status')
     mailing_clients = models.ManyToManyField(Client, verbose_name='clients')
     mailing_message = models.ForeignKey(Message, on_delete=models.CASCADE, **NULLABLE, verbose_name='message')
-    mailing_owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='mailing_user', **NULLABLE)
 
     def __str__(self):
         return f'{self.mailing_sent}'

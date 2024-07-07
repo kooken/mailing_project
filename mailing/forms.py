@@ -24,7 +24,6 @@ class MessageForm(StyleFormMixin, forms.ModelForm):
 class MailingForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Mailing
-        exclude = ('owner',)
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request')

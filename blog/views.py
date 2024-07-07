@@ -42,3 +42,6 @@ class BlogCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 
 class BlogListView(LoginRequiredMixin, ListView):
     model = Blog
+
+    def get_queryset(self, *args, **kwargs):
+        return Blog.objects.filter(product=Blog.objects.get(pk=self.kwargs.get('pk')))

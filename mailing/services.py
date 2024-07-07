@@ -14,10 +14,11 @@ def send_mailing():
 
     for mailing in mailings:
         clients = mailing.mailing_clients.all()
+        message = mailing.mailing_message
         for client in clients:
             send_mail(
                 subject=Message.subject,
-                message=Message.text,
+                message=message,
                 from_email=settings.EMAIL_HOST_USER,
                 recipient_list=[client.email],
             )
