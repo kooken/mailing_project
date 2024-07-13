@@ -10,16 +10,6 @@
             <div class="card-header">
                 <h4 class="my-0 font-weight-normal">Attempt: {{ object.attempt_status }} </h4>
             </div>
-            <div class="card-body">
-                <a href="{% url 'mailing:attempt_detail' object.pk %}"
-                   class="btn btn-sm btn-outline-secondary">View attempt details</a>
-<!--                {% if perms.main.can_edit_product_description and perms.main.can_edit_is_published or user == main.owner %}-->
-                <a href="{% url 'mailing:edit_attempt' object.pk %}" type="button"
-                   class="btn btn-sm btn-outline-secondary">Edit attempt</a>
-<!--                {% endif %}-->
-                <a href="{% url 'mailing:delete_attempt' object.pk %}"
-                   class="btn btn-sm btn-outline-danger">Delete attempt</a>
-            </div>
         </div>
     </div>
     {% endfor %}

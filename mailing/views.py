@@ -11,6 +11,10 @@ class ClientListView(LoginRequiredMixin, ListView):
     model = Client
     template_name = 'client_list.html'
 
+    def get_queryset(self):
+        client_list = super().get_queryset().filter(owner=self.request.user)
+        return client_list
+
 
 class ClientDetailView(LoginRequiredMixin, DetailView):
     model = Client
@@ -45,6 +49,10 @@ class MessageListView(LoginRequiredMixin, ListView):
     model = Message
     template_name = 'message_list.html'
 
+    def get_queryset(self):
+        client_list = super().get_queryset().filter(owner=self.request.user)
+        return client_list
+
 
 class MessageDetailView(LoginRequiredMixin, DetailView):
     model = Message
@@ -77,6 +85,9 @@ class MessageDeleteView(LoginRequiredMixin, DeleteView):
 class MailingListView(LoginRequiredMixin, ListView):
     model = Mailing
     template_name = 'mailing_list.html'
+
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user)
 
 
 class MailingDetailView(LoginRequiredMixin, DetailView):
@@ -113,9 +124,9 @@ class MailingDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('mailing:mailing_list')
 
 
-# class AttemptListView(LoginRequiredMixin, ListView):
-#     model = Attempt
-#     template_name = 'attempt_list.html'
+class AttemptListView(LoginRequiredMixin, ListView):
+    model = Attempt
+    template_name = 'attempt_list.html'
 #
 #
 # class AttemptDetailView(LoginRequiredMixin, DetailView):

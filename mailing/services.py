@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.mail import send_mail
 
-from mailing.models import Mailing, Message
+from mailing.models import Mailing, Message, Attempt
 
 
 def send_mailing():
@@ -16,12 +16,21 @@ def send_mailing():
         clients = mailing.mailing_clients.all()
         message = mailing.mailing_message
         for client in clients:
-            send_mail(
-                subject=Message.subject,
-                message=message,
-                from_email=settings.EMAIL_HOST_USER,
-                recipient_list=[client.email],
-            )
+            try:
+                send_mail(
+                    subject=message.subject,
+                    message=message.text,
+                    from_email=settings.EMAIL_HOST_USER,
+                    recipient_list=[client.email],
+                )
+                Attempt.objects.create(time_attempt=datetime.now(),
+                                       attempt_status="OK",
+                                       mailing=mailing)
+            except Exception as e:
+                Attempt.objects.create(time_attempt=datetime.now(),
+                                       attempt_status="Error",
+                                       mailing=mailing,
+                                       server_response=e)
 
         if mailing.mailing_periodicity == 'daily':
             mailing.mailing_sent += timedelta(days=1)

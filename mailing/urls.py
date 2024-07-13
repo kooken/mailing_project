@@ -4,7 +4,7 @@ from mailing.apps import MailingConfig
 from mailing.views import (ClientListView, ClientDetailView, ClientDeleteView, ClientCreateView, ClientUpdateView,
                            MessageCreateView, MessageDeleteView, MessageDetailView, MessageUpdateView, MessageListView,
                            MailingListView, MailingCreateView, MailingDeleteView, MailingDetailView, MailingUpdateView,
-                           AttemptCreateView)
+                           AttemptCreateView, AttemptListView)
 
 app_name = MailingConfig.name
 
@@ -31,5 +31,5 @@ urlpatterns = [
     # path('update_attempt/<int:pk>/', AttemptUpdateView.as_view(), name='update_attempt'),
     # path('attempt_detail/<int:pk>/', AttemptDetailView.as_view(), name='message_attempt'),
     # path('delete_attempt/<int:pk>/', AttemptDeleteView.as_view(), name='delete_attempt'),
-    # path('attempt_list/', AttemptListView.as_view(), name='attempt_list'),
+    path('attempt_list/', AttemptListView.as_view(), name='attempt_list'),
 ]
