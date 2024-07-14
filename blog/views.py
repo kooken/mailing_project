@@ -17,18 +17,19 @@ class BlogDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
         return self.object
 
 
-class BlogDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+class BlogDeleteView(LoginRequiredMixin, DeleteView):
     model = Blog
     success_url = reverse_lazy('blog:list')
 
 
-class BlogUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class BlogUpdateView(LoginRequiredMixin, UpdateView):
     model = Blog
+    success_url = reverse_lazy('blog:list')
     permission_required = 'blog.change_blogpost'
     fields = ('title', 'content', 'preview',)
 
 
-class BlogCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+class BlogCreateView(LoginRequiredMixin, CreateView):
     model = Blog
     fields = ('title', 'content', 'preview',)
     success_url = reverse_lazy('blog:list')
@@ -40,8 +41,6 @@ class BlogCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         blogpost.save()
         return super().form_valid(form)
 
+
 class BlogListView(LoginRequiredMixin, ListView):
     model = Blog
-
-    def get_queryset(self, *args, **kwargs):
-        return Blog.objects.filter(product=Blog.objects.get(pk=self.kwargs.get('pk')))

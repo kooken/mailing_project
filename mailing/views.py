@@ -1,7 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
+from blog.models import Blog
 from mailing.forms import ClientForm, MailingForm, MessageForm, AttemptForm
 from mailing.models import Client, Message, Mailing, Attempt
 
@@ -87,7 +89,7 @@ class MailingListView(LoginRequiredMixin, ListView):
     template_name = 'mailing_list.html'
 
     def get_queryset(self):
-        return super().get_queryset().filter(user=self.request.user)
+        return super().get_queryset().filter(mailing_owner=self.request.user)
 
 
 class MailingDetailView(LoginRequiredMixin, DetailView):
@@ -101,10 +103,10 @@ class MailingCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('mailing:mailing_list')
 
     def form_valid(self, form):
-        mailing_owner = form.save()
+        mailing = form.save()
         user = self.request.user
-        mailing_owner.owner = user
-        mailing_owner.save()
+        mailing.mailing_owner = user
+        mailing.save()
         return super().form_valid(form)
 
     def get_form_kwargs(self):
@@ -145,14 +147,17 @@ class AttemptCreateView(LoginRequiredMixin, CreateView):
         attempt_owner.owner = user
         attempt_owner.save()
         return super().form_valid(form)
-#
-#
-# class AttemptUpdateView(LoginRequiredMixin, UpdateView):
-#     model = Attempt
-#     form_class = AttemptForm
-#     success_url = reverse_lazy('mailing:index')
-#
-#
-# class AttemptDeleteView(LoginRequiredMixin, DeleteView):
-#     model = Attempt
-#     success_url = reverse_lazy('mailing:index')
+
+
+def index_data(request):
+    count_mailing_items = Mailing.objects.count()
+    count_active_mailing_items = Mailing.objects.filter(status='started').count()
+    count_unique_clients = Client.objects.values_list('email', flat=True).count()
+    random_blogs = Blog.objects.order_by('?')[:3]
+    context = {'count_mailing_items': count_mailing_items,
+               'count_active_mailing_items': count_active_mailing_items,
+               'count_unique_clients': count_unique_clients,
+               'random_blogs': random_blogs,
+               }
+
+    return render(request, 'mailing/index.html', context)
