@@ -9,6 +9,12 @@ from mailing.models import Client, Message, Mailing, Attempt
 
 
 # Create your views here.
+
+
+def main_page(request):
+    return render(request, 'mailing/index.html')
+
+
 class ClientListView(LoginRequiredMixin, ListView):
     model = Client
     template_name = 'client_list.html'

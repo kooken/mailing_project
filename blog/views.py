@@ -7,7 +7,7 @@ from blog.models import Blog
 
 
 # Create your views here.
-class BlogDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+class BlogDetailView(LoginRequiredMixin, DetailView):
     model = Blog
 
     def get_object(self, queryset=None):
