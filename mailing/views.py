@@ -12,7 +12,11 @@ from mailing.models import Client, Message, Mailing, Attempt
 
 
 def main_page(request):
-    return render(request, 'mailing/index.html')
+    context = {"count_mailing_items": Mailing.objects.all().count(),
+               "count_active_mailing_items": Mailing.objects.filter(mailing_status='started').count(),
+               "count_unique_clients": Client.objects.values_list('email', flat=True).count(),
+               "random_blogs": Blog.objects.order_by('?')[:3]}
+    return render(request, 'mailing/index.html', context=context)
 
 
 class ClientListView(LoginRequiredMixin, ListView):
@@ -71,6 +75,7 @@ class MessageCreateView(LoginRequiredMixin, CreateView):
     model = Message
     form_class = MessageForm
     success_url = reverse_lazy('mailing:message_list')
+
     def form_valid(self, form):
         message_owner = form.save()
         user = self.request.user
@@ -153,17 +158,3 @@ class AttemptCreateView(LoginRequiredMixin, CreateView):
         attempt_owner.owner = user
         attempt_owner.save()
         return super().form_valid(form)
-
-
-def index_data(request):
-    count_mailing_items = Mailing.objects.count()
-    count_active_mailing_items = Mailing.objects.filter(status='started').count()
-    count_unique_clients = Client.objects.values_list('email', flat=True).count()
-    random_blogs = Blog.objects.order_by('?')[:3]
-    context = {'count_mailing_items': count_mailing_items,
-               'count_active_mailing_items': count_active_mailing_items,
-               'count_unique_clients': count_unique_clients,
-               'random_blogs': random_blogs,
-               }
-
-    return render(request, 'mailing/index.html', context)
