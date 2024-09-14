@@ -1,5 +1,4 @@
 from django import forms
-
 from mailing.models import Client, Mailing, Message, Attempt
 
 
@@ -11,15 +10,18 @@ class StyleFormMixin:
             if field_name == 'active_version':
                 field.widget.attrs['class'] = ' form-check-input'
 
+
 class ClientForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Client
         exclude = ('owner',)
 
+
 class MessageForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = Message
         exclude = ('owner',)
+
 
 class MailingForm(StyleFormMixin, forms.ModelForm):
     class Meta:
@@ -32,6 +34,7 @@ class MailingForm(StyleFormMixin, forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['mailing_clients'].queryset = Client.objects.filter(owner=user)
         self.fields['mailing_message'].queryset = Message.objects.filter(owner=user)
+
 
 class AttemptForm(StyleFormMixin, forms.ModelForm):
     class Meta:

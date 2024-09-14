@@ -1,9 +1,7 @@
 from django.conf import settings
 from django.core.mail import send_mail
 from django.core.management import BaseCommand
-
 from mailing.models import Mailing, Message
-from mailing.services import send_mailing
 
 
 class Command(BaseCommand):

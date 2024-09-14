@@ -1,11 +1,8 @@
 from datetime import datetime, timedelta
-
 from apscheduler.schedulers.background import BackgroundScheduler
 from django.conf import settings
-from django.contrib.auth.decorators import login_required, permission_required
 from django.core.mail import send_mail
-
-from mailing.models import Mailing, Message, Attempt
+from mailing.models import Mailing, Attempt
 
 
 def send_mailing():

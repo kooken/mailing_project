@@ -1,12 +1,6 @@
 from datetime import timedelta
-
-from django.db import models
-
-# Create your models here.
 from django.db import models
 from django.utils import timezone
-from django.utils.timezone import now
-
 from users.models import User
 
 NULLABLE = {'blank': True, 'null': True}
@@ -29,8 +23,10 @@ ATTEMPT_STATUS = (
     ('failed', 'attempt_failed'),
 )
 
+
 def one_week_from_now():
     return timezone.now() + timedelta(weeks=1)
+
 
 class Client(models.Model):
     email = models.EmailField(max_length=100, verbose_name='email')
@@ -38,7 +34,6 @@ class Client(models.Model):
     last_name = models.CharField(max_length=100, **NULLABLE,  verbose_name='client_surname')
     comment = models.TextField(**NULLABLE, verbose_name='comment')
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='owner', **NULLABLE)
-
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
@@ -64,6 +59,7 @@ class Message(models.Model):
         verbose_name = 'message'
         verbose_name_plural = 'messages'
 
+
 class Mailing (models.Model):
     mailing_sent = models.DateTimeField(default=timezone.now, verbose_name='send_timestamp')
     mailing_end = models.DateTimeField(default=one_week_from_now, verbose_name='end_timestamp')
@@ -82,6 +78,7 @@ class Mailing (models.Model):
         permissions = [
             ('can_edit_mailing_status', 'Can edit mailing status'),
         ]
+
 
 class Attempt (models.Model):
     time_attempt = models.DateTimeField(auto_now_add=True, verbose_name='attempt_time')

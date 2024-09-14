@@ -2,13 +2,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-
 from blog.models import Blog
 from mailing.forms import ClientForm, MailingForm, MessageForm, AttemptForm
 from mailing.models import Client, Message, Mailing, Attempt
-
-
-# Create your views here.
 
 
 def main_page(request):
@@ -140,11 +136,6 @@ class MailingDeleteView(LoginRequiredMixin, DeleteView):
 class AttemptListView(LoginRequiredMixin, ListView):
     model = Attempt
     template_name = 'attempt_list.html'
-#
-#
-# class AttemptDetailView(LoginRequiredMixin, DetailView):
-#     model = Attempt
-#     success_url = reverse_lazy('mailing:index')
 
 
 class AttemptCreateView(LoginRequiredMixin, CreateView):

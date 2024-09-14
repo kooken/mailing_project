@@ -7,4 +7,4 @@ register = template.Library()
 def blog_media_tag(data):
     if data:
         return f'/media/{data}'
-    return 'Картиночка не загрузилась...'
+    return 'Picture not found...'
